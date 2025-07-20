@@ -42,7 +42,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>מערכת ניהול דלאל - דף ראשי</title>
+    <title>דשבורד ניהולי - דלאל</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -65,7 +65,7 @@
         }
         header h1 {
             margin: 0;
-            font-size: 2.5em;
+            font-size: 2.2em;
         }
         .container {
             max-width: 1200px;
@@ -76,52 +76,75 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             text-align: right;
         }
-        .button-container {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        .tableau-container {
+            width: 100%;
+            height: 600px;
             margin-top: 20px;
+            position: relative;
         }
-        .dashboard-button {
+        .back-button {
             background: linear-gradient(45deg, #ff6b6b, #ff8e53);
             color: white;
-            padding: 15px 30px;
+            padding: 10px 20px;
             border: none;
             border-radius: 25px;
-            font-size: 1.2em;
+            font-size: 1em;
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
         }
-        .dashboard-button:hover {
+        .back-button:hover {
             transform: translateY(-3px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
         }
-        p {
-            line-height: 1.6;
-            font-size: 1.1em;
+        .error-message {
+            color: red;
+            display: none;
+            text-align: center;
+            margin-top: 10px;
         }
     </style>
+    <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
 </head>
 <body>
     <header>
-        <h1>המערכת של בית הקפה דלאל!</h1>
-        <p>מערכת לניהול מלאי והמלצות רכש לרשת בתי קפה "דלאל"</p>
+        <h1>דשבורד ניהולי</h1>
+        <p>כלים לניהול יומיומי ומעקב אחר ביצועי סניפים</p>
     </header>
     <div class="container">
-        <h2>מטרות המערכת</h2>
+        <button class="back-button" onclick="window.location.href='index.html'">חזור לדף הראשי</button>
+        <h2>תיאור הדשבורד</h2>
         <p>
-            מערכת ניהול המלאי והרכש של רשת בתי הקפה "דלאל" נועדה לספק כלים מתקדמים לניהול יעיל של מלאי, תכנון רכש אופטימלי וקבלת החלטות מבוססות נתונים. המערכת מחולקת לשלושה ממשקים עיקריים:
+            הדשבורד הניהולי מספק למנהלי סניפים תצוגה מפורטת של ביצועי הסניף, כולל נתוני מכירות יומיים, ניהול מלאי והמלצות לרכש. הוא מאפשר מעקב צמוד אחר פעילות הסניף ושיפור היעילות התפעולית.
         </p>
-        <ul>
-            <li><strong>דשבורד אסטרטגי:</strong> מספק תובנות ברמה גבוהה למנהלים בכירים לקבלת החלטות אסטרטגיות.</li>
-            <li><strong>דשבורד ניהולי:</strong> תומך במנהלי סניפים בניהול יומיומי ומעקב אחר ביצועים.</li>
-            <li><strong>דשבורד תפעולי:</strong> מסייע לצוותי התפעול בניהול מלאי בזמן אמת.</li>
-        </ul>
-        <div class="button-container">
-            <button class="dashboard-button" onclick="window.location.href='dash1.html'">דשבורד 1 - אסטרטגי</button>
-            <button class="dashboard-button" onclick="window.location.href='dash2.html'">דשבורד 2 - ניהולי</button>
-            <button class="dashboard-button" onclick="window.location.href='dash3.html'">דשבורד 3 - תפעולי</button>
-        </div>
+        <div class="tableau-container" id="vizContainer2"></div>
+        <div class="error-message" id="errorMessage2">לא ניתן לטעון את הדשבורד. אנא בדוק את החיבור לאינטרנט או נסה שוב מאוחר יותר.</div>
     </div>
+    <script>
+        function initViz() {
+            const containerDiv = document.getElementById("vizContainer2");
+            const errorMessage = document.getElementById("errorMessage2");
+            const url = "https://public.tableau.com/views/Book1_17530312672520/Dashboard2";
+            const options = {
+                hideTabs: true,
+                hideToolbar: false,
+                width: "100%",
+                height: "600px",
+                onFirstInteractive: function () {
+                    console.log("Tableau Dashboard 2 loaded successfully.");
+                },
+                onFirstVizSizeKnown: function () {
+                    console.log("Tableau Dashboard 2 size adjusted.");
+                }
+            };
+            try {
+                new tableau.Viz(containerDiv, url, options);
+            } catch (e) {
+                console.error("Error loading Tableau Dashboard 2:", e);
+                errorMessage.style.display = "block";
+            }
+        }
+        window.onload = initViz;
+    </script>
 </body>
 </html>
