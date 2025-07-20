@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>דשבורד תפעולי - דלאל</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        header {
+            background: linear-gradient(90deg, #4b79a1, #283e51);
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.2em;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-align: right;
+        }
+        .tableau-container {
+            width: 100%;
+            height: 600px;
+            margin-top: 20px;
+            position: relative;
+        }
+        .back-button {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 20px;
+        }
+        .back-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+        .error-message {
+            color: red;
+            display: none;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://public.tableau.com/javascripts/api/tableau-2.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>דשבורד תפעולי</h1>
+        <p>ניהול מלאי בזמן אמת עבור צוותי התפעול</p>
+    </header>
+    <div class="container">
+        <button class="back-button" onclick="window.location.href='index.html'">חזור לדף הראשי</button>
+        <h2>תיאור הדשבורד</h2>
+        <p>
+            הדשבורד התפעולי מאפשר לצוותי התפעול לעקוב אחר רמות המלאי בזמן אמת, לקבל התראות על מלאי נמוך ולהפיק דוחות מפורטים לצורך תכנון משלוחים ורכש יעיל.
+        </p>
+        <div class="tableau-container" id="vizContainer3"></div>
+        <div class="error-message" id="errorMessage3">לא ניתן לטעון את הדשבורד. אנא בדוק את החיבור לאינטרנט או נסה שוב מאוחר יותר.</div>
+    </div>
+    <script>
+        function initViz() {
+            const containerDiv = document.getElementById("vizContainer3");
+            const errorMessage = document.getElementById("errorMessage3");
+            const url = "https://public.tableau.com/views/Book1_17530312672520/Dashboard3";
+            const options = {
+                hideTabs: true,
+                hideToolbar: false,
+                width: "100%",
+                height: "600px",
+                onFirstInteractive: function () {
+                    console.log("Tableau Dashboard 3 loaded successfully.");
+                },
+                onFirstVizSizeKnown: function () {
+                    console.log("Tableau Dashboard 3 size adjusted.");
+                }
+            };
+            try {
+                new tableau.Viz(containerDiv, url, options);
+            } catch (e) {
+                console.error("Error loading Tableau Dashboard 3:", e);
+                errorMessage.style.display = "block";
+            }
+        }
+        window.onload = initViz;
+    </script>
+</body>
+</html>
